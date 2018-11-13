@@ -1,0 +1,76 @@
+.jumbotron{
+  height: 250px;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+h2{
+  font-size: 50px;
+}
+
+.remaining{
+background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url("http://www.images99.com/i99/06/136463/A%20P%20J%20Abdul%20Kalam%20Image.jpg");
+  background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ display: block;
+  max-width: 100%;
+  height: auto;
+  
+  
+}
+
+
+  .img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+body{
+  color: #000000;
+}
+
+#img-div{
+  margin-left: 150px;
+  
+}
+
+#img-caption{
+  text-align: center;
+}
+
+#tribute-info{
+  font-size:15px;
+  margin-left: 20px;
+}
+
+.awards{
+  text-align: center;
+  font-size:12px;
+}
+
+#lastline{
+  text-align: center;
+  font-size: 27px;
+}
+
+#title{
+   margin-left: 20px;
+}
+
+html,body{
+  font-family:"Trebuchet MS", Helvetica, sans-serif;
+}
+
+blockquote{
+  font-style: italic;
+}
