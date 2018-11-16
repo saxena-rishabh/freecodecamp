@@ -1,0 +1,105 @@
+#main-heading{
+  font-family: 'Raleway', sans-serif;
+  margin-top: 40px;
+}
+
+p{
+  text-align: center;
+}
+
+.review{
+  text-align: center;
+  
+}
+
+h1{
+  text-align: center;
+}
+
+.green{
+  color: #25db28;
+}
+
+h5{
+   text-align: center;
+  font-weight: bold;
+}
+
+h3{
+   text-align: center;
+}
+
+#upperlist{
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+#cards{
+  margin-top: 40px;
+  font-family: 'Raleway', sans-serif;
+}
+
+#reviews-div{
+  margin-top: 30px;
+  font-style: italic;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+
+.offer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+@media (max-width: 650px) {
+  .offer{  
+    align-items: center;
+  justify-content: center;
+  }
+}
+
+.product-images{
+  
+}
+
+
+
+.product-upper{
+   width: 242px;
+  height: 323px !important;
+  font-family: 'Raleway', sans-serif;
+}
+
+.product-lower{
+   width: 100% !important;
+  height: 300px !important;
+  font-family: 'Raleway', sans-serif;
+}
+
+#header-img{
+ height: 25px;
+  width: 25px;
+  margin-bottom: 5px;
+}
+
+iframe{
+  @media (max-width: 480px){
+    width: 400px;
+    height: 315px;
+  }
+}
+
+body, html{
+  font-family: 'Open Sans', sans-serif;
+}
+
+#products{
+  font-family: 'Raleway', sans-serif;
+}
+
+#p-lower{
+  font-family: 'Raleway', sans-serif;
+}
