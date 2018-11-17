@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Technical Documentation Page</title>
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div id="navbarr">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light " id="navbar">
+  <header id>
+  <a class="navbar-brand" href="#">Intermediate C</a>
+    </header>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#Advanced_Data_Types">Advanced Data Types</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#Pointers">Pointers</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#Memory_Management">Memory Management</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#Error_Handling">Error Handling</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#Stream_I/O">Stream I/O</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#String_Manipulation">String Manipulation</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+</div>
+
+
+<div class="container">
+  
+<main id="main-doc">
+  
+  <section class="main-section" id="Advanced_Data_Types">
+    
+    
+      <header>Advanced Data Types</header>
+    <article>
+      
+      <p>In the chapter Variables we looked at the primitive data types. However advanced data types allow us greater flexibility in managing data in our program, and also some novel uses.</p>
+      
+      <h3>Data structures</h3>
+      <p>A data structure ("struct") contains multiple pieces of data. Each piece of data (called a "member") can be accessed by the name of the variable, followed by a '.', then the name of the member. (Another way to access a member is using the member operator '->'). The member variables of a struct can be of any data type and can even be an array or a pointer.
+</p>
+      <h4>Structs</h4>
+      <p>A data structure contains multiple pieces of data. One defines a data structure using the struct keyword. For example,</p>
+      <code>struct mystruct {
+    int int_member;
+    double double_member;
+    char string_member[25];
+} variable;
+variable is </code>
+      
+      <p>variable is an instance of mystruct. You can omit it from the end of the struct declaration and declare it later using:</p>
+      
+      <code>struct mystruct variable;</code>
+      
+      <p>It is often common practice to make a type synonym so we don't have to type "struct mystruct" all the time. C allows us the possibility to do so using a typedef statement, which aliases a type:</p>
+      
+      <code>typedef struct {
+    ...
+} Mystruct;</code>
+      
+      <p>The struct itself has no name (by the absence of a name on the first line), but it is aliased as Mystruct. Then you can use</p>
+      
+      <code>Mystruct structure;</code>
+      
+      <p>Note that it is commonplace, and good style to capitalize the first letter of a type synonym. However in the actual definition we need to give the struct a tag so we can refer to it: we may have a recursive data structure of some kind. For trees or chained lists, we need a pointer to the same data type in the struct. During compilation, the type synonym is not known to the compiler and there will be an error. To avoid this, it is necessary to let the compiler know the name right from the start (Note that the struct keyword is used only inside the structure! After the declaration, the compiler knows that the type synonym refers to a struct):</p>
+      
+      <code>typedef struct Mystruct {
+    ...
+    struct Mystruct *pMystruct
+} Mystruct;</code>
+      
+      <h4>Unions</h4>
+      
+      <p>The definition of a union is similar to that of a struct. The difference between the two is that in a struct, the members occupy different areas of memory, but in a union, the members occupy the same area of memory. Thus, in the following type, for example:</p>
+      
+      <code>union {
+    int i;
+    double d;
+} u;</code>
+      
+      <p>The programmer can access either u.i or u.d, but not both at the same time. Since u.i and u.d occupy the same area of memory, modifying one modifies the value of the other, sometimes in unpredictable ways.
+
+The size of a union is the size of its largest member.</p>
+      
+      <h3>Enumerations</h3>
+      
+      <p>Enumerations are artificial data types representing associations between labels and integers. Unlike structs or unions, they are not composed of other data types. An example declaration:</p>
+      
+      <code>enum color {
+    red,
+    orange,
+    yellow,
+    green,
+    cyan,
+    blue,
+    purple,
+} crayon_color;</code>
+      
+      <p>In the example above, red equals 0, orange equals 1, ... and so each subsequent label is by 1 larger that the previous one. It is possible to assign values to labels within the integer range, but they must be constant.</p>
+      
+      <p>Similar declaration syntax that applies for structs and unions also applies for enums. Also, one normally doesn't need to be concerned with the integers that labels represent:</p>
+      
+      <code>enum weather weather_outside = rain;</code>
+      
+      <p>This peculiar property makes enums especially convenient in switch-case statements:</p>
+      
+      <code>enum weather {
+    sunny,
+    windy,
+    cloudy,
+    rain,
+} weather_outside;
+
+...
+
+switch (weather_outside) {
+case sunny:
+    wear_sunglasses();
+    break;
+case windy:
+    wear_windbreaker();
+    break;
+case cloudy:
+    get_umbrella();
+    break;
+case rain:
+    get_umbrella();
+    wear_raincoat();
+    break;
+}</code>
+      
+      
+    </article>
+  
+  </section>
+    
+  
+  
+  
+  <section class="main-section" id="Pointers">
+    
+      <header>Pointers</header>
+    <article>
+      
+      <p>A pointer is a value that designates the address (i.e., the location in memory), of some value. Pointers are variables that hold a memory location.</p>
+      
+      <p>There are four fundamental things you need to know about pointers:</p>
+      
+      <ul>
+        <li>How to declare them (with the address operator '&': int *pointer = &variable;)</li>
+        <li>How to assign to them (pointer = NULL;)</li>
+        <li>How to reference the value to which the pointer points (known as dereferencing, by using the dereferencing operator '*': value = *pointer;)</li>
+        <li>How they relate to arrays (the vast majority of arrays in C are simple lists, also called "1 dimensional arrays", but we will briefly cover multi-dimensional arrays with some pointers in a later chapter).</li>
+      </ul>
+      
+      <h3>Declaring pointers</h3>
+      
+      <p>Consider the following snippet of code which declares two pointers:</p>
+      
+      <code> struct MyStruct {
+     int   m_aNumber;
+     float num2;
+ };
+ 
+int main()
+{
+     int *pJ2;
+     struct MyStruct *pAnItem;
+}</code>
+      
+      <p>Lines 1-4 define a structure. Line 8 declares a variable which points to an int, and line 9 declares a variable which points to something with structure MyStruct. So to declare a variable as something which points to some type, rather than contains some type, the asterisk (*) is placed before the variable name.
+
+In the following, line 1 declares var1 as a pointer to a long and var2 as a long and not a pointer to a long. In line 2, p3 is declared as a pointer to a pointer to an int.</p>
+      
+      <code>long  *  var1, var2;
+ int   ** p3;</code>
+      
+      <p>Pointer types are often used as parameters to function calls. The following shows how to declare a function which uses a pointer as an argument. Since C passes function arguments by value, in order to allow a function to modify a value from the calling routine, a pointer to the value must be passed. Pointers to structures are also used as function arguments even when nothing in the struct will be modified in the function. This is done to avoid copying the complete contents of the structure onto the stack. More about pointers as function arguments later.</p>
+      
+      <code>int MyFunction( struct MyStruct *pStruct );</code>
+      
+      <h3>Assigning values to pointers</h3>
+      
+      <p>So far we've discussed how to declare pointers. The process of assigning values to pointers is next. To assign the address of a variable to a pointer, the & or 'address of' operator is used.</p>
+      
+      <code> int   myInt;
+ int  *pPointer;
+ struct MyStruct   dvorak;
+ struct MyStruct  *pKeyboard;
+ 
+ pPointer = &myInt;
+ pKeyboard = &dvorak;</code>
+      
+      <p>Here, pPointer will now reference myInt and pKeyboard will reference dvorak.
+
+Pointers can also be assigned to reference dynamically allocated memory. The malloc() and calloc() functions are often used to do this.</p>
+      
+      <code> #include <stdlib.h>
+ /* ... */
+ struct MyStruct *pKeyboard;
+ /* ... */
+ pKeyboard = malloc(sizeof *pKeyboard);</code>
+        
+        <p>The malloc function returns a pointer to dynamically allocated memory (or NULL if unsuccessful). The size of this memory will be appropriately sized to contain the MyStruct structure.</p>
+        
+        <p>The following is an example showing one pointer being assigned to another and of a pointer being assigned a return value from a function.</p>
+        
+        <code>static struct MyStruct val1, val2, val3, val4;
+
+ struct MyStruct *ASillyFunction( int b )
+ {
+    struct MyStruct *myReturn;
+ 
+    if (b == 1) myReturn = &val1;
+    else if (b==2) myReturn = &val2;
+    else if (b==3) myReturn = &val3;
+    else myReturn = &val4;
+  
+    return myReturn;
+ }
+
+ struct MyStruct *strPointer;
+ int     *c, *d;
+ int     j;
+
+ c = &j;                           /* pointer assigned using & operator */
+ d = c;                            /* assign one pointer to another     */
+ strPointer = ASillyFunction( 3 ); /* pointer returned from a function. */</code>
+        
+        <p>When returning a pointer from a function, do not return a pointer that points to a value that is local to the function or that is a pointer to a function argument. Pointers to local variables become invalid when the function exits. In the above function, the value returned points to a static variable. Returning a pointer to dynamically allocated memory is also valid.</p>
+        
+        <h3>Pointer dereferencing</h3>
+        
+        <p>To access a value to which a pointer points, the * operator is used. Another operator, the -> operator is used in conjunction with pointers to structures. </p>
+        
+        <p>Here's a short example.</p>
+        
+        <code>int   c, d;
+ int   *pj;
+ struct MyStruct astruct;
+ struct MyStruct *bb;
+ 
+ c   = 10;
+ pj  = &c;             /* pj points to c */
+ d   = *pj;            /* d is assigned the value to which pj points, 10 */
+ pj  = &d;             /* now points to d */
+ *pj = 12;             /* d is now 12 */
+ 
+ bb = &astruct;
+ (*bb).m_aNumber = 3;  /* assigns 3 to the m_aNumber member of astruct */
+ bb->num2 = 44.3;      /* assigns 44.3 to the num2 member of astruct   */
+ *pj = bb->m_aNumber;  /* equivalent to d = astruct.m_aNumber;          */</code>
+      
+        <p>The expression bb->m_aNumber is entirely equivalent to (*bb).m_aNumber. They both access the m_aNumber element of the structure pointed to by bb. There is one more way of dereferencing a pointer, which will be discussed in the following section.</p>
+        
+        <p>When dereferencing a pointer that points to an invalid memory location, an error often occurs which results in the program terminating. The error is often reported as a segmentation error. A common cause of this is failure to initialize a pointer before trying to dereference it.</p>
+        
+        <p>C is known for giving you just enough rope to hang yourself, and pointer dereferencing is a prime example. You are quite free to write code that accesses memory outside that which you have explicitly requested from the system. And many times, that memory may appear as available to your program due to the vagaries of system memory allocation. However, even if 99 executions allow your program to run without fault, that 100th execution may be the time when your "memory pilfering" is caught by the system and the program fails. Be careful to ensure that your pointer offsets are within the bounds of allocated memory!</p>
+        
+        <p>The declaration void *somePointer; is used to declare a pointer of some nonspecified type. You can assign a value to a void pointer, but you must cast the variable to point to some specified type before you can dereference it. Pointer arithmetic is also not valid with void * pointers.</p>
+      
+        
+      
+      
+      
+      </article>
+    
+  </section>
+    
+    
+    
+    <section class="main-section" id="Memory_Management">
+    
+      <header>Memory Management</header>
+    <article>
+      
+      <p>In C, you have already considered creating variables for use in the program. You have created some arrays for use, but you may have already noticed some limitations:</p>
+      
+      <ul>
+        <li>the size of the array must be known beforehand</li>
+        <li>the size of the array cannot be changed in the duration of your program</li>
+       </ul>
+      <p> <i>Dynamic memory allocation in C is a way of circumventing these problems.</i></p>
+      
+      <h3>The malloc function</h3>
+      
+      <code>#include <stdlib.h>
+void *calloc(size_t nmemb, size_t size);
+void free(void *ptr);
+void *malloc(size_t size);
+void *realloc(void *ptr, size_t size);</code>
+        
+        <p>The standard C function malloc is the means of implementing dynamic memory allocation. It is defined in stdlib.h or malloc.h, depending on what operating system you may be using. Malloc.h contains only the definitions for the memory allocation functions and not the rest of the other functions defined in stdlib.h. Usually you will not need to be so specific in your program, and if both are supported, you should use <stdlib.h>, since that is ANSI C, and what we will use here.</p>
+          <p>The corresponding call to release allocated memory back to the operating system is free.</p>
+        <p>When dynamically allocated memory is no longer needed, free should be called to release it back to the memory pool. Overwriting a pointer that points to dynamically allocated memory can result in that data becoming inaccessible. If this happens frequently, eventually the operating system will no longer be able to allocate more memory for the process. Once the process exits, the operating system is able to free all dynamically allocated memory associated with the process.</p>
+        <p>Let's look at how dynamic memory allocation can be used for arrays.</p>
+        <p>Normally when we wish to create an array we use a declaration such as</p>
+        <code>int array[10];</code>
+        <p>Recall array can be considered a pointer which we use as an array. We specify the length of this array is 10 ints. After array[0], nine other integers have space to be stored consecutively.
+
+Sometimes it is not known at the time the program is written how much memory will be needed for some data. In this case we would want to dynamically allocate required memory after the program has started executing. To do this we only need to declare a pointer, and invoke malloc when we wish to make space for the elements in our array, or, we can tell malloc to make space when we first initialize the array. Either way is acceptable and useful.
+
+We also need to know how much an int takes up in memory in order to make room for it; fortunately this is not difficult, we can use C's builtin sizeof operator. For example, if sizeof(int) yields 4, then one int takes up 4 bytes. Naturally, 2*sizeof(int) is how much memory we need for 2 ints, and so on.</p>
+        <p>So how do we malloc an array of ten ints like before? If we wish to declare and make room in one hit, we can simply say</p>
+        <code>int *array = malloc(10*sizeof(int));</code>
+      <p>We only need to declare the pointer; malloc gives us some space to store the 10 ints, and returns the pointer to the first element, which is assigned to that pointer.</p>
+        
+        <h4>Error checking</h4>
+        <p>When we want to use malloc, we have to be mindful that the pool of memory available to the programmer is finite. As such, we can conceivably run out of memory! In this case, malloc will return NULL. In order to stop the program crashing from having no more memory to use, one should always check that malloc has not returned NULL before attempting to use the memory; we can do this by</p>
+        
+        <code>int *pt = malloc(3 * sizeof(int));
+if(pt == NULL)
+{
+   fprintf(stderr, "Out of memory, exiting\n");
+   exit(1);
+}</code>
+        
+        <h3>The calloc function</h3>
+        <p>The calloc function allocates space for an array of items and initializes the memory to zeros. The call mArray = calloc( count, sizeof(struct V)) allocates count objects, each of whose size is sufficient to contain an instance of the structure struct V. The space is initialized to all bits zero. The function returns either a pointer to the allocated memory or, if the allocation fails, NULL.</p>
+        
+        <h3>The realloc function</h3>
+        
+        <code>void * realloc ( void * ptr, size_t size );</code>
+        
+        <p>The realloc function changes the size of the object pointed to by ptr to the size specified by size. The contents of the object shall be unchanged up to the lesser of the new and old sizes. If the new size is larger, the value of the newly allocated portion of the object is indeterminate. If ptr is a null pointer, the realloc function behaves like the malloc function for the specified size. Otherwise, if ptr does not match a pointer earlier returned by the calloc, malloc, or realloc function, or if the space has been deallocated by a call to the free or realloc function, the behavior is undefined. If the space cannot be allocated, the object pointed to by ptr is unchanged. If size is zero and ptr is not a null pointer, the object pointed to is freed. The realloc function returns either a null pointer or a pointer to the possibly moved allocated object.</p>
+        
+        <h3>The free function</h3>
+        <p>Memory that has been allocated using malloc, realloc, or calloc must be released back to the system memory pool once it is no longer needed. This is done to avoid perpetually allocating more and more memory, which could result in an eventual memory allocation failure. Memory that is not released with free is however released when the current program terminates on most operating systems. Calls to free are as in the following example.</p>
+        
+        <code>int *myStuff = malloc( 20 * sizeof(int)); 
+if (myStuff != NULL) 
+{
+   /* more statements here */
+   /* time to release myStuff */
+   free( myStuff );
+}</code>
+      
+      
+       </article>
+    
+  </section>
+      
+      
+      
+      <section class="main-section" id="Error_Handling">
+    
+      <header>Error Handling</header>
+    <article>
+      <p>C does not provide direct support for error handling (also known as exception handling). By convention, the programmer is expected to prevent errors from occurring in the first place, and test return values from functions. For example, -1 and NULL are used in several functions such as socket() (Unix socket programming) or malloc() respectively to indicate problems that the programmer should be aware about. In a worst case scenario where there is an unavoidable error and no way to recover from it, a C programmer usually tries to log the error and "gracefully" terminate the program.</p>
+      
+      <p>There is an external variable called "errno", accessible by the programs after including <errno.h> - that file comes from the definition of the possible errors that can occur in some Operating Systems (e.g. Linux - in this case, the definition is in include/asm-generic/errno.h) when programs ask for resources. Such variable indexes error descriptions accessible by the function 'strerror( errno )'.</p>
+        <p>The following code tests the return value from the library function malloc to see if dynamic memory allocation completed properly:</p>
+      
+      <code>#include <stdio.h>        /* perror */
+#include <errno.h>        /* errno */
+#include <stdlib.h>       /* malloc, free, exit */
+
+int main(void)
+{
+
+    /* Pointer to char, requesting dynamic allocation of 2,000,000,000
+     * storage elements (declared as an integer constant of type
+     * unsigned long int). (If your system has less than 2 GB of memory
+     * available, then this call to malloc will fail.)
+     */
+    char *ptr = malloc(2000000000UL);
+
+    if (ptr == NULL) {
+        perror("malloc failed");
+        /* here you might want to exit the program or compensate
+           for that you don't have 2GB available
+         */
+    } else {
+        /* The rest of the code hereafter can assume that 2,000,000,000
+         * chars were successfully allocated... 
+         */
+        free(ptr);
+    }
+
+    exit(EXIT_SUCCESS); /* exiting program */
+}</code>
+        
+        <p>The code snippet above shows the use of the return value of the library function malloc to check for errors. Many library functions have return values that flag errors, and thus should be checked by the astute programmer. In the snippet above, a NULL pointer returned from malloc signals an error in allocation, so the program exits. In more complicated implementations, the program might try to handle the error and try to recover from the failed memory allocation.</p>
+        
+        <h3>Preventing divide by zero errors</h3>
+        <p>A common pitfall made by C programmers is not checking if a divisor is zero before a division command. The following code will produce a runtime error and in most cases, exit.</p>
+        
+        <code>int dividend = 50;
+int divisor = 0;
+int quotient;
+
+quotient = (dividend/divisor); /* This will produce a runtime error! */</code>
+        
+        <p>For reasons beyond the scope of this document, you must check or make sure that a divisor is never zero. Alternatively, for *nix processes, you can stop the OS from terminating your process by blocking the SIGFPE signal.</p>
+        
+        <p>The code below fixes this by checking if the divisor is zero before dividing.</p>
+        
+        <code>#include <stdio.h> /* for fprintf and stderr */
+#include <stdlib.h> /* for exit */
+int main( void )
+{
+    int dividend = 50;
+    int divisor = 0;
+    int quotient;
+
+    if (divisor == 0) {
+        /* Example handling of this error. Writing a message to stderr, and
+         * exiting with failure.
+         */
+        fprintf(stderr, "Division by zero! Aborting...\n");
+        exit(EXIT_FAILURE); /* indicate failure.*/
+    }
+
+    quotient = dividend / divisor;
+    exit(EXIT_SUCCESS); /* indicate success.*/
+}</code>
+      
+      
+      
+      
+      
+      </article>
+    
+  </section>
+        
+        
+        
+        
+        <section class="main-section" id="Stream_I/O">
+    
+      <header>Stream I/O</header>
+    <article>
+      
+      <h3>Introduction</h3>
+      <p>The stdio.h header declares a broad assortment of functions that perform input and output to files and devices such as the console. It was one of the earliest headers to appear in the C library. It declares more functions than any other standard header and also requires more explanation because of the complex machinery that underlies the functions.</p>
+      
+      <p>The device-independent model of input and output has seen dramatic improvement over the years and has received little recognition for its success. FORTRAN II was touted as a machine-independent language in the 1960s, yet it was essentially impossible to move a FORTRAN program between architectures without some change. In FORTRAN II, you named the device you were talking to right in the FORTRAN statement in the middle of your FORTRAN code. So, you said READ INPUT TAPE 5 on a tape-oriented IBM 7090 but READ CARD to read a card image on other machines. FORTRAN IV had more generic READ and WRITE statements, specifying a logical unit number (LUN) instead of the device name. The era of device-independent I/O had dawned.</p>
+      
+      <p>Peripheral devices such as printers still had fairly strong notions about what they were asked to do. And then, peripheral interchange utilities were invented to handle bizarre devices. When cathode-ray tubes came onto the scene, each manufacturer of consoles solved problems such as console cursor movement in an independent manner, causing further headaches.</p>
+      
+      <p>It was into this atmosphere that Unix was born. Ken Thompson and Dennis Ritchie, the developers of Unix, deserve credit for packing any number of bright ideas into the operating system. Their approach to device independence was one of the brightest.</p>
+      <p>The ANSI C <stdio.h> library is based on the original Unix file I/O primitives but casts a wider net to accommodate the least-common denominator across varied systems</p>
+        
+        <h3>Standard Streams</h3>
+      <p>When a C program starts its execution the program automatically opens three standard streams named stdin, stdout, and stderr. These are attached for every C program.
+
+The first standard stream is used for input buffering and the other two are used for output. These streams are sequences of bytes.</p>
+      <p>Consider the following program:</p>
+      
+      <code>/* An example program. */
+ int main()
+ {
+     int var;
+     scanf ("%d", &var); /* use stdin for scanning an integer from keyboard. */
+     printf ("%d", var); /* use stdout for printing a character. */
+     return 0;
+ }
+ /* end program. */</code>
+      
+      <p>By default stdin points to the keyboard and stdout and stderr point to the screen. It is possible under Unix and may be possible under other operating systems to redirect input from or output to a file or both.</p>
+      
+      <h3>Opening and Closing Files</h3>
+      <p>To open and close files, the <stdio.h> library has three functions: fopen, freopen, and fclose.</p>
+        
+        <h4>Opening Files</h4>
+      
+      <code> #include <stdio.h>
+ FILE *fopen(const char *filename, const char *mode);
+ FILE *freopen(const char *filename, const char *mode, FILE *stream);</code>
+        <p>fopen and freopen opens the file whose name is in the string pointed to by filename and associates a stream with it. Both return a pointer to the object controlling the stream, or, if the open operation fails, a null pointer. The error and end-of-file indicators are cleared, and if the open operation fails error is set. freopen differs from fopen in that the file pointed to by stream is closed first when already open and any close errors are ignored.</p>
+        <p>mode for both functions points to a string beginning with one of the following sequences (additional characters may follow the sequences):</p>
+        
+        <code>r           open a text file for reading
+w           truncate to zero length or create a text file for writing
+a           append; open or create text file for writing at end-of-file
+rb          open binary file for reading
+wb          truncate to zero length or create a binary file for writing
+ab          append; open or create binary file for writing at end-of-file
+r+          open text file for update (reading and writing)
+w+          truncate to zero length or create a text file for update
+a+          append; open or create text file for update
+r+b or rb+  open binary file for update (reading and writing)
+w+b or wb+  truncate to zero length or create a binary file for update
+a+b or ab+  append; open or create binary file for update</code>
+        
+        <h4>Closing Files</h4>
+        <code>#include <stdio.h>
+ int fclose(FILE *stream);</code>
+          
+          <p>The fclose function causes the stream pointed to by stream to be flushed and the associated file to be closed. Any unwritten buffered data for the stream are delivered to the host environment to be written to the file; any unread buffered data are discarded. The stream is disassociated from the file. If the associated buffer was automatically allocated, it is deallocated. The function returns zero if the stream was successfully closed or EOF if any errors were detected.</p>
+      
+      
+      
+      
+      </article>
+    
+  </section>
+      
+      <section class="main-section" id="String_Manipulation">
+    
+      <header>String Manipulation</header>
+    <article>
+      
+      <p>A string in C is merely an array of characters. The length of a string is determined by a terminating null character: '\0'. So, a string with the contents, say, "abc" has four characters: 'a', 'b', 'c', and the terminating null character.</p>
+      
+      <p>The terminating null character has the value zero.</p>
+      
+      <h3>Syntax</h3>
+      <p>In C, string constants (literals) are surrounded by double quotes ("), e.g. "Hello world!" and are compiled to an array of the specified char values with an additional null terminating character (0-valued) code to mark the end of the string. The type of a string constant is char [].</p>
+      
+      <h4>backslash escapes</h4>
+      <p>String literals may not directly in the source code contain embedded newlines or other control characters, or some other characters of special meaning in string.
+
+To include such characters in a string, the backslash escapes may be used, like this:</p>
+      
+      <h4>Escape	Meaning</h4>
+      
+      <code>\\	Literal backslash
+\"	Double quote
+\'	Single quote
+\n	Newline (line feed)
+\r	Carriage return
+\b	Backspace
+\t	Horizontal tab
+\f	Form feed
+\a	Alert (bell)
+\v	Vertical tab
+\?	Question mark (used to escape trigraphs)
+\nnn	Character with octal value nnn
+\xhh	Character with hexadecimal value hh
+</code>
+      
+      <h4>Wide character strings</h4>
+      <p>C supports wide character strings, defined as arrays of the type wchar_t, 16-bit (at least) values. They are written with an L before the string like this</p>
+      <code>wchar_t *p = L"Hello world!";</code>
+      <p>This feature allows strings where more than 256 different possible characters are needed (although also variable length char strings can be used). They end with a zero-valued wchar_t. These strings are not supported by the <string.h> functions. Instead they have their own functions, declared in <wchar.h>.</p>
+        
+        <h3>The &ltstring.h&gt Standard Header</h3>
+        
+        <p>Because programmers find raw strings cumbersome to deal with, they wrote the code in the <string.h> library. It represents not a concerted design effort but rather the accretion of contributions made by various authors over a span of years.</p>
+          
+          <p>First, three types of functions exist in the string library:</p>
+        
+        <ul>
+          <li>The <strong>mem</strong> functions manipulate sequences of arbitrary characters without regard to the null character.</li>
+          <li>The <strong>str</strong> functions manipulate null-terminated sequences of characters.</li>
+          <li>The <strong>strn</strong> functions manipulate sequences of non-null characters.</li>
+        </ul>
+        
+        <h4>The more commonly-used string functions</h4>
+        <p>The nine most commonly used functions in the string library are:</p>
+        
+            <ul>
+              <li><strong>strcat</strong> - concatenate two strings.</li>
+              <li><strong>strchr</strong> - string scanning operation.</li>
+              <li><strong>strcmp</strong> - compare two strings.</li>
+              <li><strong>strcpy</strong> - copy a string.</li>
+              <li><strong>strlen</strong> - get string length.</li>
+              <li><strong>strncat</strong> - concatenate one string with part of another.</li>
+              <li><strong>strncmp</strong> - compare parts of two strings.</li>
+              <li><strong>strncpy</strong> - copy part of a string.</li>
+              <li><strong>strrchr</strong> - string scanning operation.</li>
+        </ul>
+      
+      
+      
+      
+      
+      </article>
+    
+  </section>
+  
+  
+</main>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>
