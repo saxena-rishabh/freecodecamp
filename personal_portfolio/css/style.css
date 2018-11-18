@@ -1,0 +1,106 @@
+body{
+  background-color: #eaf1f2;
+  font-family: 'Raleway', sans-serif;
+  
+}
+#navbar{
+  background-color: #eaf1f2;
+  margin-botton: 50px;
+  
+}
+
+#projects{
+  background-color: #eaf1f2;
+  text-align: center;
+}
+
+#welcome-section{
+  background-color: #eaf1f2;
+  margin-top: 80px;
+  
+    height: 100vh;
+    overflow: auto;
+  
+
+  
+}
+
+#project-image{
+  width: 250px;
+  height: 250px;
+}
+
+h2{
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+h4{
+  font-size:20px;
+}
+
+#projects-heading{
+  
+}
+
+#myself{
+    
+    text-align: center;
+    margin-left: 200px;
+    margin-right: 200px;
+  margin-top:220px;
+  font-family: sans-serif;
+  
+  
+  }
+
+#intro{
+  font-size: 20px;
+  color: #5c6a82;
+}
+
+#skills{
+  height: 100vh;
+    overflow: auto;
+
+}
+
+#projects{
+  height: 100vh;
+  overflow: auto;
+
+}
+
+#footer{
+  text-align: center;
+  margin-bottom: 20px;
+  
+}
+
+#contact-heading{
+  font-size: 30px;
+}
+
+#profile-link{
+  font-size:20px;
+}
+
+p{
+  font-size: 17px;
+  text-align: center;
+}
+
+
+
+
+
+@media only screen and (max-width: 500px) {
+  body{
+  background-color: #eaf1f2;
+  font-family: 'Raleway', sans-serif;
+  
+}
+}
+  
+  
